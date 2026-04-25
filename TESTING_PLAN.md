@@ -2,8 +2,8 @@
 
 This guide provides step-by-step instructions to verify the Investment Portfolio Tracker API using the built-in **Swagger UI**.
 
-**API Base URL:** `http://localhost:3000` (or your live Render URL)
-**Swagger Documentation:** `/api-docs`
+**API Base URL:** `https://portfolio-tracker-api-gsqb.onrender.com`
+**Interactive Docs:** [https://portfolio-tracker-api-gsqb.onrender.com/api-docs/](https://portfolio-tracker-api-gsqb.onrender.com/api-docs/)
 
 ---
 
