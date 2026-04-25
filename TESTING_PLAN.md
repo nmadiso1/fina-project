@@ -7,7 +7,7 @@ This guide provides step-by-step instructions to verify the Investment Portfolio
 
 ---
 
-## 🔑 Authentication Setup (Required for Protected Endpoints)
+## Authentication Setup (Required for Protected Endpoints)
 
 Before testing protected resources, you must obtain a JWT and authorize the Swagger UI.
 
