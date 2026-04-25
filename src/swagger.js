@@ -97,7 +97,7 @@ const options = {
     security: [{ BearerAuth: [] }],
   },
   // Route files containing @swagger JSDoc comments
-  apis: ['./src/routes/*.js'],
+  apis: [require('path').join(__dirname, './routes/*.js')],
 };
 
 module.exports = swaggerJsdoc(options);
