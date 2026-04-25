@@ -4,16 +4,16 @@ const bcrypt = require('bcrypt');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Seeding database...');
+  console.log(' Seeding database...');
 
   // Only seed if database is empty to avoid wiping data on every restart
   const userCount = await prisma.user.count();
   if (userCount > 0) {
-    console.log('✨ Database already has data. Skipping seed.');
+    console.log('Database already has data. Skipping seed.');
     return;
   }
 
-  console.log('🌱 Database is empty. Starting seed...');
+  console.log(' Database is empty. Starting seed...');
 
   const hashedPassword = await bcrypt.hash('Password123!', 10);
 
@@ -26,7 +26,7 @@ async function main() {
     data: { email: 'not-owner@example.com', password: hashedPassword },
   });
 
-  console.log(`   ✅ Created users: ${user1.email}, ${user2.email}`);
+  console.log(`    Created users: ${user1.email}, ${user2.email}`);
 
   // Create portfolios for user1
   const portfolio1 = await prisma.portfolio.create({
@@ -54,7 +54,7 @@ async function main() {
     },
   });
 
-  console.log(`   ✅ Created portfolios`);
+  console.log(`    Created portfolios`);
 
   // Create holdings
   const holding1 = await prisma.holding.create({
@@ -84,7 +84,7 @@ async function main() {
     },
   });
 
-  console.log(`   ✅ Created holdings`);
+  console.log(`    Created holdings`);
 
   // Create transactions
   await prisma.transaction.createMany({
@@ -120,7 +120,7 @@ async function main() {
     ],
   });
 
-  console.log(`   ✅ Created transactions`);
+  console.log(`    Created transactions`);
   console.log('\n🎉 Database seeded successfully!');
   console.log('\nTest credentials:');
   console.log('  owner@example.com     / Password123!');
@@ -129,7 +129,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error('❌ Seeding failed:', e);
+    console.error(' Seeding failed:', e);
     process.exit(1);
   })
   .finally(async () => {
