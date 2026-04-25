@@ -6,11 +6,14 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // Clean existing data (order matters due to FK constraints)
-  await prisma.transaction.deleteMany({});
-  await prisma.holding.deleteMany({});
-  await prisma.portfolio.deleteMany({});
-  await prisma.user.deleteMany({});
+  // Only seed if database is empty to avoid wiping data on every restart
+  const userCount = await prisma.user.count();
+  if (userCount > 0) {
+    console.log('✨ Database already has data. Skipping seed.');
+    return;
+  }
+
+  console.log('🌱 Database is empty. Starting seed...');
 
   const hashedPassword = await bcrypt.hash('Password123!', 10);
 
