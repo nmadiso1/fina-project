@@ -33,6 +33,13 @@ app.get('/api-docs.json', (req, res) => {
 });
 
 // ── API Routes ──────────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Investment Portfolio Tracker API is live!',
+    docs: '/api-docs',
+    health: '/health'
+  });
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/portfolios', portfolioRoutes);
 app.use('/api/holdings', holdingRoutes);
