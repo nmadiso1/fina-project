@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  portfolios Portfolio[]
+}
+
+model Portfolio {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  holdings Holding[]
+
+  @@index([userId])
+}
+
+model Holding {
+  id           Int      @id @default(autoincrement())
+  portfolioId  Int
+  tickerSymbol String
+  quantity     Decimal  @db.Decimal(18, 8)
+  averageCost  Decimal  @db.Decimal(18, 2)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  portfolio    Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([portfolioId])
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  holdingId  Int
+  type       String   // "BUY" or "SELL"
+  quantity   Decimal  @db.Decimal(18, 8)
+  price      Decimal  @db.Decimal(18, 2)
+  executedAt DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  holding Holding @relation(fields: [holdingId], references: [id], onDelete: Cascade)
+
+  @@index([holdingId])
+}
